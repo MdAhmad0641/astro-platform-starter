@@ -1,21 +1,241 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ContextAlert from '../components/ContextAlert.astro';
-import Markdown from '../components/Markdown.astro';
+const primaryServices = [
+  { title: 'Tax Planning & Compliance', text: 'Strategic tax solutions to optimize your financial position and ensure compliance.', icon: '🧮', tone: 'blue' },
+  { title: 'Business Consulting', text: 'Expert guidance to help your business grow and achieve financial success.', icon: '📈', tone: 'green' },
+  { title: 'Audit & Assurance', text: 'Comprehensive audit services ensuring accuracy and regulatory compliance.', icon: '🛡️', tone: 'purple' }
+];
 
-const explainer = `
-An Astro website can go way beyond static pages - on the right platform.
-
-Netlify supports not only [Streaming SSR](https://docs.astro.build/en/guides/server-side-rendering/#html-streaming) and fast [Edge Middleware](https://docs.astro.build/en/guides/middleware/), but also [on-demand revalidation](https://www.netlify.com/blog/cache-tags-and-purge-api-on-netlify/) and [stale-while-revalidate](https://www.netlify.com/blog/swr-and-fine-grained-cache-control/). 
-Any page or data can be rebuilt only when needed, without site visitors ever getting a performance hit.
-`;
+const serviceGrid = [
+  ['Tax Planning & Filing', 'Comprehensive tax planning strategies and timely filing of Income Tax, GST, and other tax returns.', '🧮'],
+  ['Audit & Assurance', 'Statutory audits, internal audits, tax audits, and other assurance services as per regulations.', '✅'],
+  ['Accounting Services', 'Complete bookkeeping, financial statement preparation, and accounting management services.', '📄'],
+  ['Company Formation', 'Expert assistance in company registration, LLP formation, and all incorporation procedures.', '🏢'],
+  ['Business Consulting', 'Strategic business advice, financial planning, and growth consulting for your business.', '📈'],
+  ['Financial Analysis', 'In-depth financial analysis, budgeting, forecasting, and performance evaluation services.', '📊'],
+  ['Startup Advisory', 'Specialized services for startups including funding assistance and compliance management.', '💼'],
+  ['GST Compliance', 'Complete GST registration, return filing, and compliance management services.', '⚖️'],
+  ['Payroll Management', 'Efficient payroll processing, PF/ESI compliance, and employee tax management.', '👥'],
+  ['Investment Advisory', 'Professional guidance on investment planning and wealth management strategies.', '🕒'],
+  ['Due Diligence', 'Comprehensive due diligence services for mergers, acquisitions, and investments.', '📑'],
+  ['Corporate Advisory', 'Expert corporate advisory services including restructuring and compliance management.', '🤝']
+];
 ---
 
-<Layout title="Welcome to Astro.">
-    <ContextAlert class="mb-4" />
-    <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
-    <Markdown content={explainer} class="text-lg mb-10" />
-    <p class="mb-8">
-        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg btn-primary sm:btn-wide">Read the Docs</a>
-    </p>
-</Layout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>AFROZ KHAN & CO. | Chartered Accountants</title>
+    <style>
+      :root { --blue:#2563eb; --dark:#0b1d47; --muted:#5f6f8b; --bg:#edf2f8; }
+      *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,Segoe UI,sans-serif;color:var(--dark);background:var(--bg)}
+      .container{max-width:1280px;margin:auto;padding:0 24px}
+      header{position:sticky;top:0;background:#fff;z-index:50;border-bottom:1px solid #d8e0ec}
+      nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
+      .brand{display:flex;gap:12px;align-items:center;font-weight:800}.logo{width:54px;height:54px;border-radius:10px;border:1px solid #d8e0ec;display:grid;place-items:center;color:var(--blue);font-size:28px}
+      .menu{display:flex;gap:34px;align-items:center}.menu a{text-decoration:none;color:#111827;font-weight:600}
+      .btn{padding:12px 24px;border-radius:12px;border:1px solid transparent;background:var(--blue);color:#fff;text-decoration:none;font-weight:700;display:inline-block}
+      .btn.alt{background:#fff;color:var(--blue);border-color:var(--blue)}
+      section{padding:80px 0}
+      .hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+      h1{font-size:64px;line-height:1.06;margin:0 0 20px}.blue{color:var(--blue)}
+      p{color:#324c75;line-height:1.55}.hero p{font-size:32px;max-width:600px}
+      .cta{display:flex;gap:16px;margin:24px 0 36px}
+      .stats{display:flex;gap:56px;font-weight:800;color:var(--blue);font-size:42px}.stats span{display:block;font-size:14px;color:#324c75;font-weight:500}
+      .stack{display:grid;gap:20px}.card{background:#fff;padding:28px;border-radius:18px;box-shadow:0 4px 15px rgba(18,38,63,.08)}
+      .icon{width:50px;height:50px;border-radius:12px;display:grid;place-items:center;font-size:24px;margin-bottom:18px}
+      .blue-bg{background:#dbeafe}.green-bg{background:#dcfce7}.purple-bg{background:#efe4ff}.orange-bg{background:#ffedd5}.teal-bg{background:#cffafe}
+      h2{text-align:center;font-size:54px;margin:0 0 16px}.lead{text-align:center;max-width:920px;margin:0 auto 48px;font-size:28px}
+      .about{display:grid;grid-template-columns:1.2fr 1fr;gap:28px}.pill{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+      .feature{padding:26px;border-radius:16px;text-align:center;background:#fff}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+      .choose .feature{background:transparent}
+      .banner{background:linear-gradient(180deg,#2959df,#284dcb);border-radius:20px;color:#fff;text-align:center;padding:56px 20px}
+      .panel{max-width:980px;margin:0 auto;background:#fff;border-radius:18px;padding:28px}
+      form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}
+      input,select,textarea{width:100%;padding:14px 16px;border-radius:12px;border:1px solid #c8d4e8;font-size:16px;background:#f9fbff}
+      textarea{min-height:130px;resize:vertical}
+      .contacts{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+      footer{background:#07173f;color:#d0dcff;padding:50px 0 22px}.footer-grid{display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr;gap:24px}
+      .whatsapp{position:fixed;left:16px;bottom:16px;width:58px;height:58px;border-radius:10px;background:#22c55e;color:white;display:grid;place-items:center;text-decoration:none;font-size:32px;box-shadow:0 8px 14px rgba(0,0,0,.2)}
+      @media (max-width: 960px){.menu{display:none}.hero,.about,.contacts,.grid,.footer-grid{grid-template-columns:1fr}.pill{grid-template-columns:1fr 1fr}h1{font-size:46px}.hero p,.lead{font-size:22px}.stats{font-size:30px;gap:24px;flex-wrap:wrap}}
+      @media (max-width:640px){.pill{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}}
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="brand"><div class="logo">A</div><div>AFROZ KHAN & CO.<br /><small style="font-weight:500;color:#4d648f">Chartered Accountants</small></div></div>
+          <div class="menu">
+            <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#why">Why Choose Us</a><a href="#appointment">Appointment</a><a class="btn" href="#contact">Contact Us</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section id="home">
+      <div class="container hero">
+        <div>
+          <h1>Your Trusted <span class="blue">Financial Partner</span></h1>
+          <p>Expert Chartered Accountancy services for businesses and individuals. We provide comprehensive tax planning, audit, and financial consulting solutions tailored to your needs.</p>
+          <div class="cta"><a class="btn" href="#appointment">Get Started</a><a class="btn alt" href="#services">Our Services</a></div>
+          <div class="stats"><div>15+<span>Years Experience</span></div><div>500+<span>Happy Clients</span></div><div>100%<span>Satisfaction</span></div></div>
+        </div>
+        <div class="stack">
+          {primaryServices.map((item) => (
+            <article class="card">
+              <div class={`icon ${item.tone}-bg`}>{item.icon}</div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="about" style="background:#fff">
+      <div class="container">
+        <h2>About CA AFROZ KHAN & CO.</h2>
+        <p class="lead">A leading firm of Chartered Accountants committed to providing professional excellence and personalized service to our clients.</p>
+        <div class="about">
+          <div>
+            <h3 style="font-size:42px">Our Story</h3>
+            <p>CA Afroz Khan & Co. was established with a vision to provide world-class accounting and financial services to businesses and individuals. With over 15 years of experience in the industry, we have built a reputation for excellence, integrity, and client satisfaction.</p>
+            <p>Our team of qualified professionals brings together extensive expertise in taxation, audit, accounting, and business advisory services.</p>
+            <ul>
+              <li>Qualified and experienced team of Chartered Accountants</li>
+              <li>Personalized approach to meet individual client needs</li>
+              <li>Commitment to accuracy, timeliness, and confidentiality</li>
+              <li>Updated with latest tax laws and regulatory requirements</li>
+            </ul>
+          </div>
+          <div class="pill">
+            <article class="feature blue-bg"><h3>Excellence</h3><p>Committed to delivering the highest quality professional services</p></article>
+            <article class="feature green-bg"><h3>Client Focus</h3><p>Your success is our priority, always</p></article>
+            <article class="feature purple-bg"><h3>Integrity</h3><p>Ethical practices and transparency in all we do</p></article>
+            <article class="feature orange-bg"><h3>Reliability</h3><p>Dependable service you can trust</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <h2>Our Services</h2>
+        <p class="lead">We offer a comprehensive range of accounting, taxation, and business advisory services to meet all your financial needs.</p>
+        <div class="grid">
+          {serviceGrid.map(([title, text, icon], i) => (
+            <article class="card">
+              <div class={`icon ${['blue-bg','green-bg','purple-bg','orange-bg','blue-bg','teal-bg'][i % 6]}`}>{icon}</div>
+              <h3>{title}</h3><p>{text}</p>
+            </article>
+          ))}
+        </div>
+        <p style="text-align:center;margin-top:34px">Don't see what you're looking for? We offer customized solutions for unique business needs.</p>
+        <div style="text-align:center"><a class="btn" href="#contact">Contact Us for Custom Solutions</a></div>
+      </div>
+    </section>
+
+    <section id="why" class="choose" style="background:#fff">
+      <div class="container">
+        <h2>Why Choose Us</h2>
+        <p class="lead">When you work with CA Afroz Khan & Co., you're partnering with professionals who are committed to your financial success.</p>
+        <div class="grid">
+          <article class="feature"><h3>Expert Professionals</h3><p>Team of highly qualified and experienced Chartered Accountants dedicated to your success.</p></article>
+          <article class="feature"><h3>Confidentiality Assured</h3><p>We maintain the highest standards of confidentiality and data security for all client information.</p></article>
+          <article class="feature"><h3>Timely Service</h3><p>Our team ensures all services are delivered on time, every time.</p></article>
+          <article class="feature"><h3>Growth Focused</h3><p>We help you strategize for sustainable business growth.</p></article>
+          <article class="feature"><h3>24/7 Support</h3><p>Our team is always available to address your queries.</p></article>
+          <article class="feature"><h3>Personalized Approach</h3><p>Every client is unique. We provide customized solutions tailored to your specific requirements.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="banner">
+          <h2 style="color:white;margin:0 0 12px">Ready to Get Started?</h2>
+          <p style="color:#dce6ff;margin-bottom:26px">Let us help you achieve your financial goals. Schedule a consultation with our experts today.</p>
+          <a class="btn alt" href="#appointment">Schedule a Consultation</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="appointment">
+      <div class="container">
+        <h2>Book an Appointment</h2>
+        <p class="lead">Schedule a consultation with our expert chartered accountants. Choose your preferred date and time.</p>
+        <div class="panel">
+          <form id="appointmentForm">
+            <input required placeholder="Full Name *" /><input required type="email" placeholder="Email Address *" />
+            <input required placeholder="Phone Number *" /><select required><option value="">Service Required *</option><option>Tax Planning</option><option>Audit & Assurance</option><option>Business Consulting</option></select>
+            <input required type="date" /><input required type="time" />
+            <textarea class="full" placeholder="Additional Message (Optional)"></textarea>
+            <button class="btn full" type="submit">Book Appointment</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" style="background:#fff">
+      <div class="container">
+        <h2>Get In Touch</h2>
+        <p class="lead">Have questions or need professional assistance? We're here to help. Reach out to us today!</p>
+        <div class="contacts">
+          <div>
+            <h3>Contact Information</h3>
+            <p><strong>Office Address:</strong><br/>2nd Floor, Gurudwara Road, Shah Market, Bhagalpur, Bihar 812001</p>
+            <p><strong>Phone:</strong> +91 89812 16367</p>
+            <p><strong>Email:</strong> ca.afrozkhan.co@gmail.com</p>
+          </div>
+          <div>
+            <h3>Send us a Message</h3>
+            <form id="contactForm">
+              <input required placeholder="Full Name *" class="full" />
+              <input required type="email" placeholder="Email Address *" class="full" />
+              <input placeholder="Phone Number" class="full" />
+              <select required class="full"><option value="">Select a subject *</option><option>General Inquiry</option><option>Service Request</option></select>
+              <textarea required class="full" placeholder="Tell us how we can help you..."></textarea>
+              <button class="btn full" type="submit">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container footer-grid">
+        <div><div class="brand"><div class="logo">A</div><div>AFROZ KHAN & CO.</div></div><p>Your trusted partner for all accounting, taxation, and business advisory needs.</p></div>
+        <div><h4>Quick Links</h4><p>Home<br/>About Us<br/>Services<br/>Why Choose Us<br/>Contact</p></div>
+        <div><h4>Our Services</h4><p>Tax Planning & Filing<br/>Audit & Assurance<br/>Accounting Services<br/>Business Consulting</p></div>
+        <div><h4>Contact Us</h4><p>Bhagalpur, Bihar<br/>+91 89812 16367<br/>ca.afrozkhan.co@gmail.com</p></div>
+      </div>
+      <p style="text-align:center;margin-top:18px">© 2026 CA Afroz Khan & Co. All rights reserved.</p>
+    </footer>
+
+    <a class="whatsapp" href="#contact" aria-label="WhatsApp">🟢</a>
+
+    <script>
+      const onSubmit = (id, label) => {
+        const form = document.getElementById(id);
+        form?.addEventListener('submit', (e) => {
+          e.preventDefault();
+          alert(`${label} submitted successfully!`);
+          form.reset();
+        });
+      };
+      onSubmit('appointmentForm', 'Appointment');
+      onSubmit('contactForm', 'Message');
+      document.querySelectorAll('a[href^="#"]').forEach((el) => {
+        el.addEventListener('click', (e) => {
+          const target = document.querySelector(el.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
